@@ -1,2 +1,16 @@
 import mysql from "mysql";
-export const con = mysql.createConnection();
+// sql өгөгдлийн сантай холбож байна.
+export const db = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "1223",
+  database: "social",
+});
+// Өгөгдлийн сан холбогдсон эсэхийг шалгаж байгаа хэсэг.
+try {
+  db.connect();
+  console.log("Амжилттай өгөгдлийн сантай холбогдлоо.");
+} catch (err) {
+  console.error("Өгөгдлийн сантай холбогдоход алдаа гарлаа :", err);
+}
