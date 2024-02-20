@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import userRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
 import likesRouter from "./routes/likes.js";
@@ -10,6 +12,8 @@ const app = express();
 // Middleware
 // дамжигдаж буй өгөгдөл json оор дамжина.
 app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
 
 // App router-ийг зааж өгөж байна.
 app.use("/api/users", userRouter);
