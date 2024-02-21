@@ -2,9 +2,9 @@ import mysql from "mysql";
 // sql өгөгдлийн сантай холбож байна.
 export const db = mysql.createConnection({
   host: "localhost",
-  port: 3306,
+  port: 3000,
   user: "root",
-  password: "1223",
+  password: "",
   database: "social",
 });
 // Өгөгдлийн сан холбогдсон эсэхийг шалгаж байгаа хэсэг.
