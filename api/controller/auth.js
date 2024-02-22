@@ -3,9 +3,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 // export const register = (req, res) => {
-//   // Хэрэглэгчийг байгаа эсэхийг шалгана.
+//   // Бүртгэлтэй и-мэйл хэрэглэгч байгаа эсэхийг шалгана.
 //   const q = "SELECT * FROM users WHERE email = ?";
-//   db.query(q, [req.body.username], (err, data) => {
+//   db.query(q, [req.body.email], (err, data) => {
 //     if (err) return res.status(500).json(err);
 //     if (data.length)
 //       return res.status(409).json("Хэрэглэгч бүртгэлтэй байна!!!");
@@ -28,28 +28,34 @@ import jwt from "jsonwebtoken";
 // };
 
 export const register = (req, res) => {
-  // Check if username exists
+  // Адилхан нэртэй хэрэглэгч байгаа эсэхийг шалгана.
   const usernameQuery = "SELECT * FROM users WHERE username = ?";
   db.query(usernameQuery, [req.body.username], (err, usernameData) => {
     if (err) return res.status(500).json(err);
     if (usernameData.length)
-      return res.status(409).json("Username already exists");
+      return res
+        .status(409)
+        .json(`${req.body.username} нэртэй хэрэглэгч бүртгэлтэй байна.`);
 
-    // Check if email exists
+    // Адилхан и-мэйлтэй хэрэглэгч байгаа эсэхийг шалгана.
     const emailQuery = "SELECT * FROM users WHERE email = ?";
     db.query(emailQuery, [req.body.email], (err, emailData) => {
       if (err) return res.status(500).json(err);
       if (emailData.length)
-        return res
-          .status(409)
-          .json({ error: "Хэрэглэгчийн нэр бүртгэлтэй байна" });
+        return res.status(409).json("Хэрэглэгчийн и-мэйл бүртгэлтэй байна");
 
-      // If neither username nor email exists, proceed with registration
+      // Хэрвээ хэрэглэгчийн и-мэйл болон нэр бүртгэлгүй байвал бүртгэлийн процессийг явуулна.
+
+      // Хэрэглэгчийн нууц үгийг нууцлахад зориулагдсан bcrypt сангийн санамсаргүй байдлаар үүссэн давс / salt.
       const salt = bcrypt.genSaltSync(10);
+      // Хэрэглэгчийн нууц үгийг нууцлах.
       const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+      // Хэрэглэгч хүснэгтрүү өгөгдөл хийх query.
       const insertQuery =
         "INSERT INTO users (`username`,`email`,`password`) VALUES (?)";
+
       const values = [req.body.username, req.body.email, hashedPassword];
+
       db.query(insertQuery, [values], (err, data) => {
         if (err) return res.status(500).json(err);
         else return res.status(200).json("Хэрэглэгч амжилттай бүртгэгдлээ");

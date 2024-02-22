@@ -12,7 +12,9 @@ const app = express();
 // Middleware
 // дамжигдаж буй өгөгдөл json оор дамжина.
 app.use(express.json());
+// Cors ашиглана
 app.use(cors());
+// Cookie
 app.use(cookieParser());
 
 // App router-ийг зааж өгөж байна.
