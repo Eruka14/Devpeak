@@ -51,6 +51,7 @@ const LoginPage = () => {
                 name="username"
                 onChange={handleChange}
                 className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                required
               />{" "}
             </div>
             {/* Хэрэглэгчийн и-мэйл input */}
@@ -63,6 +64,7 @@ const LoginPage = () => {
                 name="email"
                 onChange={handleChange}
                 className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                required
               />{" "}
             </div>
             {/* Хэрэглэгчийн нууц үг input */}
@@ -76,6 +78,7 @@ const LoginPage = () => {
                   name="password"
                   onChange={handleChange}
                   className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                  required
                 />
                 {/* hide / reveal icon button */}
                 <span className="absolute z-50 cursor-pointer mt-2 mr-2">

@@ -37,6 +37,7 @@ const LoginPage = () => {
                 name="email"
                 onChange={handleChange}
                 className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                required
               />{" "}
             </div>
             {/* Хэрэглэгчийн нууц үг оруулах хэсэг */}
@@ -51,6 +52,7 @@ const LoginPage = () => {
                   name="password"
                   onChange={handleChange}
                   className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                  required
                 />
                 <span className="absolute mt-2 mr-2 z-50 cursor-pointer">
                   {ToggleIcon}
