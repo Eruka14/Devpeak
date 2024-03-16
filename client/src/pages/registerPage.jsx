@@ -22,10 +22,10 @@ const LoginPage = () => {
 
   // Хэрэглэгчийн оруулсан мэдээллийг өгөгдлийн санруу дамжуулах
   const handleClick = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios.post("http://localhost:8000/api/auth/register", Inputs);
-      setInputs({ username: "", email: "", password: "" });
+      // setInputs({ username: "", email: "", password: "" });
     } catch (Err) {
       setErr(Err.response.data);
     }

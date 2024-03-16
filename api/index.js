@@ -10,14 +10,22 @@ import questionsRouter from "./routes/questions.js";
 const app = express();
 
 // Middleware
-// дамжигдаж буй өгөгдөл json оор дамжина.
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+//амжигдаж буй өгөгдөл json оор дамжина.
 app.use(express.json());
 // Cors ашиглана
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:8000",
+  })
+);
 // Cookie
 app.use(cookieParser());
 
-// App router-ийг зааж өгөж байна.
+// App router-ийг зааж өгч байна.
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/likes", likesRouter);
