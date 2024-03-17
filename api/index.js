@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import likesRouter from "./routes/likes.js";
 import answersRouter from "./routes/answers.js";
 import questionsRouter from "./routes/questions.js";
+import multer from "multer";
 // express ашиглана.
 const app = express();
 
@@ -24,6 +25,23 @@ app.use(
 );
 // Cookie
 app.use(cookieParser());
+
+//file upload multer library
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../client/public/upload"); //save to a folder/
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname); //rename the file with date
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  const file = req.file;
+  res.status(200).json(file.filename);
+});
 
 // App router-ийг зааж өгч байна.
 app.use("/api/users", userRouter);
