@@ -2,6 +2,7 @@ import moment from "moment/moment.js";
 import { db } from "../connection.js";
 import jwt from "jsonwebtoken";
 
+// Ажиллаж байгаа.
 export const getQuestions = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Нэвтрэх эрхгүй!");
@@ -18,6 +19,7 @@ export const getQuestions = (req, res) => {
   });
 };
 
+// Ажиллаж байгаа.
 export const addQuestion = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Нэвтрэх эрхгүй!");
@@ -41,6 +43,7 @@ export const addQuestion = (req, res) => {
   });
 };
 
+// Ажиллаж байгаа
 export const deleteQuestion = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Нэвтрэх эрхгүй!");
@@ -58,19 +61,25 @@ export const deleteQuestion = (req, res) => {
   });
 };
 
-// Засна
+// Ажиллаж байгаа.
 export const editQuestion = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Нэвтрэх эрхгүй!");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token хүчингүй байна.");
-    const q = "";
+    const q =
+      "UPDATE questions SET `title`=?, `desc`=? WHERE `id`=? AND `user_id`=?";
 
-    db.query(q, [req.params.id, userInfo.id], (err, data) => {
-      if (err) return res.status(500).json(err);
-      if (data.affectedRows > 0) return res.status(200).json("");
-      return res.status(403).json("");
-    });
+    db.query(
+      q,
+      [req.body.title, req.body.desc, req.params.id, userInfo.id],
+      (err, data) => {
+        if (err) return res.status(500).json(err);
+        if (data.affectedRows > 0)
+          return res.status(200).json("Амжилттай шинчиллээ.");
+        return res.status(403).json("Хүсэлт амжилтгүй.");
+      }
+    );
   });
 };

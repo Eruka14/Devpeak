@@ -2,6 +2,7 @@ import { db } from "../connection.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// Ажиллаж байгаа
 export const register = (req, res) => {
   // Адилхан нэртэй хэрэглэгч байгаа эсэхийг шалгана.
   const usernameQuery = "SELECT * FROM users WHERE username = ?";
@@ -38,6 +39,7 @@ export const register = (req, res) => {
   });
 };
 
+// Ажиллаж байгаа
 export const login = (req, res) => {
   const q = "SELECT * FROM users WHERE email = ?";
 
@@ -63,6 +65,7 @@ export const login = (req, res) => {
   });
 };
 
+// Ажиллаж байгаа
 export const logout = (req, res) => {
   res
     .clearCookie("accessToken", {

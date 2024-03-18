@@ -52,5 +52,5 @@ app.use("/api/questions", questionsRouter);
 
 // backend 8000 port дээр ажиллана
 app.listen(8000, () => {
-  console.log("API ажиллаж байна.");
+  console.log("8000 port дээр API ажиллаж байна.");
 });

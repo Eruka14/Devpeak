@@ -1,6 +1,7 @@
 import { db } from "../connection.js";
 import jwt from "jsonwebtoken";
 
+// Ажиллаж байгаа
 export const getUser = (req, res) => {
   const user_id = req.params.user_id;
   const q = "SELECT * FROM users WHERE id = ?";
@@ -12,7 +13,8 @@ export const getUser = (req, res) => {
   });
 };
 
-export const updateUser = (req, res) => {
+// Ажиллаж байгаа.
+export const editUser = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Нэвтрэх эрхгүй!");
 

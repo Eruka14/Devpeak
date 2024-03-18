@@ -10,9 +10,7 @@ const router = express.Router();
 // Болсон
 router.get("/", getQuestions);
 router.post("/", addQuestion);
-router.post("/:id", deleteQuestion);
-
-// Дутуу засна
-router.post("/:id", editQuestion);
+router.delete("/:id", deleteQuestion);
+router.put("/:id", editQuestion);
 
 export default router;

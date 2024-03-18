@@ -7,12 +7,13 @@ import {
 } from "../controller/answers.js";
 const router = express.Router();
 
-// Болсон
+// Асуултын хариултыг авч чадахгүй байгаа.
 router.get("/", getAnswers);
+// Болсон
 router.post("/", addAnswer);
 
 // Болоогүй засна
-router.post("/:id", deleteAnswer);
-router.post("/:id", editAnswer);
+router.delete("/:id", deleteAnswer);
+router.put("/:id", editAnswer);
 
 export default router;
