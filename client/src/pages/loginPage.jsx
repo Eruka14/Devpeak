@@ -29,21 +29,21 @@ const LoginPage = () => {
             {/* Хэрэглэгчийн и-мэйл input */}
             <div className="my-3">
               <label htmlFor="email" className="block pb-1">
-                И-мэйл
+                И-мэйл <span className="text-red-800 font-bold">*</span>
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 onChange={handleChange}
-                className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                className="border border-slate-300 rounded-md w-[100%] h-8 pl-2 focus:outline-none transition ease-in-out focus:border-blue-400 focus:border-2 focus:duration-100"
                 required
               />{" "}
             </div>
             {/* Хэрэглэгчийн нууц үг оруулах хэсэг */}
             <div>
               <label htmlFor="password" className="block pb-1">
-                Нууц үг
+                Нууц үг <span className="text-red-800 font-bold">*</span>
               </label>
               <div className="flex justify-end">
                 <input
@@ -51,7 +51,7 @@ const LoginPage = () => {
                   id="password"
                   name="password"
                   onChange={handleChange}
-                  className="border border-slate-300 rounded-md w-[100%] h-8 pl-2"
+                  className="border border-slate-300 rounded-md w-[100%] h-8 pl-2 focus:outline-none transition ease-in-out focus:border-blue-400 focus:border-2 focus:duration-100"
                   required
                 />
                 <span className="absolute mt-2 mr-2 z-50 cursor-pointer">

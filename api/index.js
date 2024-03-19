@@ -20,7 +20,7 @@ app.use(express.json());
 // Cors ашиглана
 app.use(
   cors({
-    origin: "http://localhost:8000",
+    origin: ["http://localhost:8000", "http://localhost:5173"],
   })
 );
 // Cookie
