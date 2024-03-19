@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import usePasswordToggle from "../hooks/usePasswordToggle";
 import Navbar from "../components/Navbar";
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast, Bounce, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   // Алдааны мэдээлэл хадгалах төлөв
   const [Err, setErr] = useState(null);
@@ -12,12 +18,66 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
+
+  const toastSuccessHandler = () => {
+    toast.success("Амжилттай Нэвтэрлээ", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom,
+    });
+  };
+
+  const toastErrorHandler = () => {
+    toast.error("Алдаа гарлаа!", {
+      position: "top-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    });
+  };
   // Хэрэглэгчийн оруулсан мэдээллийг төлөврүү дамжуулах
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(Inputs);
+      toastSuccessHandler();
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
+    } catch (Err) {
+      setErr(Err.response.data);
+    }
+  };
+
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Bounce
+      />
       <Navbar />
       <div className="flex justify-center items-center h-screen bg-gray-200">
         <form action="">
@@ -63,6 +123,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 className="block w-[95%] bg-green-600 rounded-md py-1 mt-6 font-bold text-white mb-2 hover:bg-green-500 ease-in-out duration-300"
+                onClick={handleLogin}
               >
                 Нэвтрэх
               </button>
