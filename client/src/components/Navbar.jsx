@@ -5,7 +5,7 @@ import DevpeakLogo from "../assets/Logo.png";
 
 const Navbar = () => {
   return (
-    <div className="border-b-[1px] border-slate-200 w-full">
+    <div className="border-b-[1px] border-slate-200 w-full top-0 sticky bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-14 justify-between">
         <Link to="/">
           <h1 className="text-lg font-bold sm:text-2xl px-2 sm:px-0 cursor-pointer flex">
