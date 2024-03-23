@@ -21,12 +21,12 @@ const Navbar = () => {
         <div className="flex justify-end w-full sm:w-auto">
           <Link to="/login">
             {" "}
-            <Mybutton style="hover:bg-slate-800 hover:text-white ease-in-out duration-300">
+            <Mybutton style="hover:bg-slate-800 hover:text-white ease-in-out duration-300 font-semibold">
               Нэвтрэх
             </Mybutton>
           </Link>
           <Link to="/register">
-            <Mybutton style="bg-blue-950 text-white hover:bg-blue-800 hover:text-white ease-in-out duration-300">
+            <Mybutton style="bg-blue-950 text-white hover:bg-blue-800 hover:text-white ease-in-out duration-300 font-semibold">
               Бүртгүүлэх
             </Mybutton>
           </Link>

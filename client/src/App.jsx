@@ -1,4 +1,9 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 import IndexPage from "./pages/IndexPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -9,42 +14,58 @@ import NotFoundPage from "./pages/NotFoundPage";
 import "./App.css";
 import { AuthContext } from "./context/authContext";
 import { useContext } from "react";
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <IndexPage />,
-  },
-  {
-    path: "/home",
-    element: <HomePage />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-  },
-  {
-    path: "/addquestion",
-    element: <AddQuestionPage />,
-  },
-  {
-    path: "/editquestion",
-    element: <EditQuestionPage />,
-  },
-  {
-    path: "*",
-    element: <NotFoundPage />,
-  },
-]);
+import Profile from "./pages/ProfilePage";
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
+  const currentUser = true;
+
+  const ProtectedRoute = ({ element }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+    return element;
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <IndexPage />,
+    },
+    {
+      path: "/home",
+      element: <ProtectedRoute element={<HomePage />} />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/register",
+      element: <RegisterPage />,
+    },
+    {
+      path: "/addquestion",
+      element: <ProtectedRoute element={<AddQuestionPage />} />,
+    },
+    {
+      path: "/editquestion",
+      element: <ProtectedRoute element={<EditQuestionPage />} />,
+    },
+    {
+      path: "*",
+      element: <NotFoundPage />,
+    },
+    {
+      path: "/profile/:id",
+      element: <ProtectedRoute element={<Profile />} />,
+    },
+  ]);
+
   return (
     <>
-      <RouterProvider router={router} />
+      {" "}
+      <RouterProvider router={router} />{" "}
     </>
   );
 }
