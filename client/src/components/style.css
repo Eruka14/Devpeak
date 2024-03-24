@@ -1,0 +1,73 @@
+/* Basic editor styles */
+.tiptap {
+  padding: 0.5rem;
+  min-height: 200px;
+  max-height: 400px;
+  border-radius: 6px;
+  border: 1px #e3e1e1 solid;
+  overflow: auto;
+}
+
+.tiptap:focus {
+  outline: none;
+  border-width: 2px;
+  border-color: #3b92f6; /* Blue ring with 2px width */
+  transition-timing-function: ease-in-out;
+  transition-duration: 100ms; /* Transition duration of 200ms */
+}
+
+.tiptap > * + * {
+  margin-top: 0.75em;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  line-height: 1.1;
+}
+
+.tiptap code {
+  background-color: #0d0d0d;
+  color: #fff;
+  font-size: 0.8rem;
+  font-family: "JetBrainsMono", monospace;
+  padding: 2px 4px;
+}
+
+.tiptap pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+}
+
+.tiptap blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid #0d0d0d;
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 2px solid #0d0d0d;
+  margin: 2rem 0;
+}
+
+button.is-active {
+  background-color: #bfbdbd;
+  border-radius: 6px;
+  padding: 2px;
+}
