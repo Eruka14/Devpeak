@@ -5,7 +5,7 @@ import myPro from "../assets/myProfile.png";
 import { FaRegEdit } from "react-icons/fa";
 
 const ProfilePage = () => {
-  // const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="min-h-screen bg-slate-50">
       <HomeNavbar />
@@ -13,7 +13,7 @@ const ProfilePage = () => {
         <div className="relative">
           <div className="flex justify-center">
             <img
-              src={myPro}
+              src={currentUser.image}
               alt="Profile picture"
               className="w-28 h-28 rounded-full border-4 border-slate-500 mt-5"
             />
@@ -23,17 +23,13 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="flex justify-center mt-3">
-          <h1 className="text-3xl font-semibold">Fyodor</h1>
+          <h1 className="text-3xl font-semibold">{currentUser.username}</h1>
         </div>
         <div className="flex justify-center mt-4 text-slate-500">
           <div className="">Намтар :</div> <br />
         </div>
         <div className="my-3">
-          <p className="text-center">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-            exercitationem, rerum iure inventore suscipit a enim veritatis
-            praesentium illo eos.
-          </p>
+          <p className="text-center">{currentUser.bio}</p>
         </div>
       </div>
     </div>

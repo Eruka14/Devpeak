@@ -22,7 +22,7 @@ const LoginPage = () => {
   const toastSuccessHandler = () => {
     toast.success("Амжилттай Нэвтэрлээ", {
       position: "top-center",
-      autoClose: 1500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -33,19 +33,6 @@ const LoginPage = () => {
     });
   };
 
-  const toastErrorHandler = () => {
-    toast.error("Алдаа гарлаа!", {
-      position: "top-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-    });
-  };
   // Хэрэглэгчийн оруулсан мэдээллийг төлөврүү дамжуулах
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -55,9 +42,7 @@ const LoginPage = () => {
     try {
       await login(Inputs);
       toastSuccessHandler();
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+      navigate("/home");
     } catch (Err) {
       setErr(Err.response.data);
     }

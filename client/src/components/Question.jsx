@@ -37,7 +37,7 @@ const Question = ({ question }) => {
       </div>
       {/* title */}
       <div className="mt-3">{question.title}</div>
-      <div className="mt-3 bg-gray-700 rounded-sm p-2 text-white">
+      <div className="mt-3 bg-gray-700 rounded-sm p-2 text-white ">
         {question.desc}
       </div>
       {/* like, answers */}

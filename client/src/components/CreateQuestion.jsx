@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import myPro from "../assets/myProfile.png";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 const CreateQuestion = () => {
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="flex items-center max-w-2xl mx-auto mt-4 rounded-md h-10 gap-3">
       <div className="flex border pl-2 pr-1 py-1 rounded-md max-w-[40%] justify-between gap-6 shadow bg-white">
-        <img src={myPro} alt="myProfile" className=" rounded-full h-9 w-9 " />
+        <img
+          src={currentUser.image}
+          alt="myProfile"
+          className=" rounded-full h-9 w-9 "
+        />
         <Link to="/addquestion">
           <div className="flex items-center gap-2 cursor-pointer">
             <FaPlus />

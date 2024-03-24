@@ -6,7 +6,7 @@ import { AuthContext } from "../context/authContext";
 import Mybutton from "./Mybutton";
 
 const Answers = () => {
-  //   const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const answers = [
     {
       id: 1,
@@ -31,7 +31,7 @@ const Answers = () => {
     <div className="flex-col">
       <div className="flex items-center mt-5">
         <img
-          src={myPro}
+          src={currentUser.image}
           alt="Profile picture"
           className="w-8 h-8 rounded-full"
         />

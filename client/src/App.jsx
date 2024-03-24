@@ -17,8 +17,7 @@ import { useContext } from "react";
 import Profile from "./pages/ProfilePage";
 
 function App() {
-  // const { currentUser } = useContext(AuthContext);
-  const currentUser = true;
+  const { currentUser } = useContext(AuthContext);
 
   const ProtectedRoute = ({ element }) => {
     if (!currentUser) {

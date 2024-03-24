@@ -32,7 +32,7 @@ export const addQuestion = (req, res) => {
     const values = [
       req.body.title,
       req.body.desc,
-      moment(Date()).format("YYYY-MM-DD HH:mm:ss"),
+      moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
     ];
 
