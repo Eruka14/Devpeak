@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 export const getAnswers = (req, res) => {
   const q =
     "SELECT a.*, u.id AS user_id, username, image FROM answers AS a JOIN users AS u ON (u.id = a.user_id) WHERE a.question_id = ? ORDER BY a.created_date DESC";
-  console.log(q);
   db.query(q, [req.query.question_id], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.status(200).json(data);

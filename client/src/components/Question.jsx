@@ -7,9 +7,11 @@ import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { TbPointerCode } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import Answers from "./Answers";
+import moment from "../mongolianLocale";
+import Markdown from "react-markdown";
 
 const Question = ({ question }) => {
-  const Up = false;
+  const Up = true;
   const [openAnswers, setOpenAnswers] = useState(false);
 
   return (
@@ -27,7 +29,7 @@ const Question = ({ question }) => {
           <div className="">
             <p className="font-semibold">{question.username}</p>
             <p className="text-[10px] text-slate-500 font-semibold">
-              {question.created_date}
+              {moment(question.created_date).fromNow()}
             </p>
           </div>
         </div>
@@ -36,9 +38,11 @@ const Question = ({ question }) => {
         </div>
       </div>
       {/* title */}
-      <div className="mt-3">{question.title}</div>
-      <div className="mt-3 bg-gray-700 rounded-sm p-2 text-white ">
-        {question.desc}
+      <div className="mt-3">
+        <Markdown>{question.title}</Markdown>
+      </div>
+      <div className="mt-3 bg-gray-700 rounded-sm p-2 text-white overflow-x-auto overflow-y-auto max-h-96 max-w-2xl">
+        <Markdown>{question.desc}</Markdown>
       </div>
       {/* like, answers */}
       <div className="mt-4">
@@ -47,17 +51,17 @@ const Question = ({ question }) => {
       <div className="flex gap-20 mx-5 mt-4">
         <div className="flex items-center cursor-pointer ">
           {Up ? <HiOutlineLightningBolt /> : <HiLightningBolt />}
-          <p className="ml-2 font-semibold">10</p>
+          <p className="ml-2 font-semibold"></p>
         </div>
         <div
           className="flex items-center cursor-pointer"
           onClick={() => setOpenAnswers(!openAnswers)}
         >
           <MdOutlineQuestionAnswer />
-          <p className="ml-2 font-semibold">Хариулт</p>
+          <p className="ml-2 font-semibold"></p>
         </div>
       </div>
-      {openAnswers && <Answers />}
+      {openAnswers && <Answers question_id={question.id} />}
     </div>
   );
 };
