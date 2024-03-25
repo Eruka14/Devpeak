@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import Answers from "./Answers";
 import moment from "../mongolianLocale";
 import Markdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const Question = ({ question }) => {
   const Up = true;
@@ -38,11 +40,30 @@ const Question = ({ question }) => {
         </div>
       </div>
       {/* title */}
-      <div className="mt-3">
-        <Markdown>{question.title}</Markdown>
-      </div>
-      <div className="mt-3 bg-gray-700 rounded-sm p-2 text-white overflow-x-auto overflow-y-auto max-h-96 max-w-2xl">
-        <Markdown>{question.desc}</Markdown>
+      <div className="mt-3 font-semibold">{question.title}</div>
+      <div className="mt-3  rounded-sm p-2 overflow-x-auto overflow-y-auto max-h-96 max-w-2xl">
+        <Markdown
+          children={question.desc}
+          components={{
+            code(props) {
+              const { children, className, node, ...rest } = props;
+              const match = /language-(\w+)/.exec(className || "");
+              return match ? (
+                <SyntaxHighlighter
+                  {...rest}
+                  PreTag="div"
+                  children={String(children).replace(/\n$/, "")}
+                  language={match[1]}
+                  style={oneDark}
+                />
+              ) : (
+                <code {...rest} className={className}>
+                  {children}
+                </code>
+              );
+            },
+          }}
+        />
       </div>
       {/* like, answers */}
       <div className="mt-4">
@@ -63,6 +84,14 @@ const Question = ({ question }) => {
       </div>
       {openAnswers && <Answers question_id={question.id} />}
     </div>
+  );
+};
+
+const Component = ({ value, language }) => {
+  return (
+    <SyntaxHighlighter language={language} style={dark}>
+      {value}
+    </SyntaxHighlighter>
   );
 };
 
