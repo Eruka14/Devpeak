@@ -34,7 +34,7 @@ export const deleteLike = (req, res) => {
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token хүчингүй байна.");
 
-    const q = "DELETE FROM likes WHERE `user_id` = ? AND `question_id = ?`";
+    const q = "DELETE FROM likes WHERE `user_id` = ? AND `question_id` = ?";
 
     db.query(q, [userInfo.id, req.query.question_id], (err, data) => {
       if (err) return res.status(500).json(err);

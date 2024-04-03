@@ -84,7 +84,7 @@ const LoginPage = () => {
         transition:Bounce
       />
       <Navbar />
-      <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className="flex justify-center items-center h-screen bg-gray-100">
         <form action="">
           <div className="bg-white px-6 pt-4 pb-4 rounded-md w-[300px] drop-shadow-md">
             {/* Гарчиг */}

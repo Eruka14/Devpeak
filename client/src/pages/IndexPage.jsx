@@ -48,14 +48,14 @@ const indexPage = () => {
               </span>
             </h2>
             <p className="text-justify text-slate-400 text-lg">
-              Программчлах явцад гарах алдааг Devpeak сайтаар бусадтай хуувалцаж
-              хариултаа олоорой.
+              Программчлах явцад гарах алдаагаа Devpeak сайтаар бусадтай
+              хуувалцаж хариултаа олоорой.
             </p>
           </div>
           <div className="  w-[40%] grid gap-10">
             <h2 className="text-3xl flex items-center font-bold bg-gradient-to-r from-slate-300 to-20% to-blue-700 text-transparent bg-clip-text">
               <FcApproval className="mr-2" />
-              Мэдэхгүй хйхй
+              Бусад
             </h2>
             <p className="text-justify text-slate-400 text-lg">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero

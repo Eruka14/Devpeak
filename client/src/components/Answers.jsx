@@ -5,10 +5,12 @@ import { AuthContext } from "../context/authContext";
 import Mybutton from "./Mybutton";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "../mongolianLocale";
+import defaultProfileImage from "../assets/defaultUser.png";
 
-const Answers = ({ question_id }) => {
+const Answers = ({ question_id, question }) => {
   const { currentUser } = useContext(AuthContext);
   const [answerDesc, setAnswerDesc] = useState("");
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["answers"],
     queryFn: () =>
@@ -40,7 +42,7 @@ const Answers = ({ question_id }) => {
     <div className="flex-col">
       <div className="flex items-center mt-5">
         <img
-          src={currentUser.image}
+          src={"/upload/" + currentUser.image}
           alt="Profile picture"
           className="w-8 h-8 rounded-full"
         />
@@ -66,7 +68,7 @@ const Answers = ({ question_id }) => {
               <div className="flex items-center justify-between">
                 <div className="flex">
                   <img
-                    src={answer.image}
+                    src={"/upload/" + answer.image}
                     alt="profile image"
                     className="w-7 h-7 rounded-full"
                   />
