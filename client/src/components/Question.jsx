@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { HiDotsVertical } from "react-icons/hi";
-import { MdQuestionAnswer } from "react-icons/md";
 import { HiLightningBolt } from "react-icons/hi";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
@@ -39,6 +38,14 @@ const Question = ({ question }) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["likes"]);
     },
+  });
+
+  const { isLoading: isLoadingAnswers, data: answersData } = useQuery({
+    queryKey: ["answers", question.id],
+    queryFn: () =>
+      makeRequest.get("/answers?question_id=" + question.id).then((res) => {
+        return res.data;
+      }),
   });
 
   const deleteMutation = useMutation({
@@ -149,7 +156,9 @@ const Question = ({ question }) => {
           onClick={() => setOpenAnswers(!openAnswers)}
         >
           <MdOutlineQuestionAnswer className="text-xl text-slate-800" />
-          <p className="ml-2 font-semibold"></p>
+          <p className="ml-2 font-semibold">
+            {isLoadingAnswers ? "Уншиж байна..." : answersData.length}
+          </p>
         </div>
       </div>
       {openAnswers && <Answers question_id={question.id} question={question} />}

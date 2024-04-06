@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 import Mybutton from "../components/Mybutton";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import { FcAbout } from "react-icons/fc";
+import { FcFaq } from "react-icons/fc";
 import { ReactTyped } from "react-typed";
 import { FaArrowRight } from "react-icons/fa6";
-import { FcApproval } from "react-icons/fc";
+import { FcAnswers } from "react-icons/fc";
 
 const indexPage = () => {
   return (
@@ -42,24 +42,24 @@ const indexPage = () => {
         <div className="w-[80%] flex justify-between items-center mx-auto h-[100%]">
           <div className="w-[40%] grid gap-10">
             <h2 className="text-3xl font-bold text-slate-200 flex items-center">
-              <FcAbout />
+              <FcFaq />
               <span className="ml-2 bg-gradient-to-r from-blue-700  to-slate-300 text-transparent bg-clip-text">
                 Веб сайтын тухай
               </span>
             </h2>
             <p className="text-justify text-slate-400 text-lg">
-              Программчлах явцад гарах алдаагаа Devpeak сайтаар бусадтай
+              &nbsp; Программчлах явцад гарах алдаагаа Devpeak сайтаар бусадтай
               хуувалцаж хариултаа олоорой.
             </p>
           </div>
           <div className="  w-[40%] grid gap-10">
-            <h2 className="text-3xl flex items-center font-bold bg-gradient-to-r from-slate-300 to-20% to-blue-700 text-transparent bg-clip-text">
-              <FcApproval className="mr-2" />
-              Бусад
+            <h2 className="text-3xl flex items-center font-bold bg-gradient-to-r from-slate-300 to-45% to-blue-700 text-transparent bg-clip-text">
+              <FcAnswers className="mr-2" />
+              Анхаарах
             </h2>
             <p className="text-justify text-slate-400 text-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-              amet eius velit, explicabo.
+              &nbsp; Эрүүл, зөв коммьюнити үүсгэхийн тулд таны туслалцаа бидэнд
+              хэрэгтэй.
             </p>
           </div>
         </div>

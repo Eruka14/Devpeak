@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { makeRequest } from "../axios";
 import { HiDotsVertical } from "react-icons/hi";
 import { AuthContext } from "../context/authContext";
@@ -10,8 +10,16 @@ import defaultProfileImage from "../assets/defaultUser.png";
 const Answers = ({ question_id, question }) => {
   const { currentUser } = useContext(AuthContext);
   const [answerDesc, setAnswerDesc] = useState("");
+  const [openEditAnswer, setOpenEditAnswer] = useState(false);
+  const [editedAnswerDesc, setEditedAnswerDesc] = useState("");
+  const [openAnswerMenu, setOpenAnswerMenu] = useState([]);
+  const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
+  const {
+    isLoading,
+    error,
+    data: answers,
+  } = useQuery({
     queryKey: ["answers"],
     queryFn: () =>
       makeRequest.get("/answers?question_id=" + question_id).then((res) => {
@@ -19,10 +27,15 @@ const Answers = ({ question_id, question }) => {
       }),
   });
 
+  useEffect(() => {
+    if (answers) {
+      setOpenAnswerMenu(new Array(answers.length).fill(false));
+    }
+  }, [answers]);
+
   moment.locale("mn");
 
-  const queryClient = useQueryClient();
-
+  // Шинэ асуултыг realtime харуулна
   const mutation = useMutation({
     mutationFn: async (newAnswer) => {
       return makeRequest.post("/answers", newAnswer);
@@ -32,10 +45,66 @@ const Answers = ({ question_id, question }) => {
     },
   });
 
-  const handleClick = async (e) => {
+  //  Асуулт нэмэх
+  const handleClick = async (e, index) => {
     e.preventDefault();
     mutation.mutate({ desc: answerDesc, question_id });
     setAnswerDesc("");
+    const newOpenAnswerMenu = [...openAnswerMenu];
+    newOpenAnswerMenu[index] = false;
+    setOpenAnswerMenu(newOpenAnswerMenu);
+  };
+
+  // Асуултны menu нээж хаах
+  const toggleAnswerMenu = (index) => {
+    const newOpenAnswerMenu = [...openAnswerMenu];
+    newOpenAnswerMenu[index] = !newOpenAnswerMenu[index];
+    setOpenAnswerMenu(newOpenAnswerMenu);
+  };
+
+  // Асуултны menu-ны засахыг нээж хаах
+  const handleEditButton = (index) => {
+    const newOpenAnswerMenu = [...openAnswerMenu];
+    newOpenAnswerMenu[index] = false; // Close the menu for the clicked answer
+    setOpenAnswerMenu(newOpenAnswerMenu);
+    setOpenEditAnswer(answers[index].id); // Set openEditAnswer to the clicked answer's id
+  };
+
+  // Асуулт устгах үед realtime харуулах
+  const deleteMutation = useMutation({
+    mutationFn: async (answer_id) => {
+      return makeRequest.delete("/answers/" + answer_id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["questions"]);
+    },
+  });
+
+  //Асуулт устгах товч дарагдах үед ажиллах функц
+  const handleDelete = async (answer_id, index) => {
+    deleteMutation.mutate(answer_id);
+    const newOpenAnswerMenu = [...openAnswerMenu];
+    newOpenAnswerMenu.splice(index, 1);
+    setOpenAnswerMenu(newOpenAnswerMenu);
+  };
+
+  // Асуултыг засах  товч дарагдах үед realtime харуулах
+  const editMutation = useMutation({
+    mutationFn: async ({ answer_id, desc }) => {
+      return makeRequest.put(`/answers/${answer_id}`, { desc });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["questions"]);
+    },
+  });
+
+  // Асуулт товч дарагдах үед ажиллах функц
+  const handleEdited = async (answer_id) => {
+    await editMutation.mutate({
+      answer_id: answer_id,
+      desc: editedAnswerDesc,
+    });
+    setOpenEditAnswer(false);
   };
 
   return (
@@ -61,9 +130,11 @@ const Answers = ({ question_id, question }) => {
           Нийтлэх
         </Mybutton>
       </div>
+      {/* Асуултыг map аар давтах */}
       {isLoading
         ? "Уншиж байна..."
-        : data.map((answer) => (
+        : Array.isArray(openAnswerMenu) &&
+          answers.map((answer, index) => (
             <div className="w-full bg-white p-2 mt-2 ml-1" key={answer.id}>
               <div className="flex items-center justify-between">
                 <div className="flex">
@@ -76,10 +147,58 @@ const Answers = ({ question_id, question }) => {
                     {answer.username}
                   </p>
                 </div>
-                <div className="cursor-pointer">
+                {/* Асуултын Menu */}
+                <div
+                  className="cursor-pointer"
+                  onClick={() => toggleAnswerMenu(index)}
+                >
                   <HiDotsVertical />
                 </div>
+                {/* Menu-ны 2 товчлуур */}
+                {openAnswerMenu.length > index &&
+                  openAnswerMenu[index] &&
+                  answer.user_id === currentUser.id && (
+                    <div className="absolute right-[440px]">
+                      <div
+                        className=" bg-red-500 text-white shadow-md rounded-t-md px-3 py-2 hover:bg-red-400 cursor-pointer text-xs"
+                        onClick={() => handleDelete(answer.id, index)}
+                      >
+                        <button>Устгах</button>
+                      </div>
+                      <div
+                        className="bg-green-500 text-white shadow-md  px-3 py-2 rounded-b-md hover:bg-green-400 cursor-pointer text-xs"
+                        onClick={() => handleEditButton(index)}
+                      >
+                        <button>Засах</button>
+                      </div>
+                    </div>
+                  )}
               </div>
+              {/* Асуулт засах товч дарах үед харагдах комп */}
+              {openEditAnswer === answer.id && (
+                <div className="w-[600px] h-26 bg-white absolute rounded-md shadow-md p-2">
+                  <textarea
+                    name="editedDesc"
+                    id="editedDesc"
+                    onChange={(e) => setEditedAnswerDesc(e.target.value)}
+                    className="border rounded-md w-full p-2 overflow-y-auto text-sm"
+                  ></textarea>
+                  <div className="flex">
+                    <Mybutton
+                      style="w-[15%] bg-red-600 rounded-md py-1 text-white mb-2 hover:bg-red-500 ease-in-out duration-300 text-[15px] font-semibold"
+                      onClick={() => setOpenEditAnswer(false)}
+                    >
+                      Цуцлах
+                    </Mybutton>
+                    <Mybutton
+                      style="w-[15%] bg-green-600 rounded-md py-1 text-white mb-2 hover:bg-green-500 ease-in-out duration-300 text-[15px] font-semibold"
+                      onClick={() => handleEdited(answer.id)} // Pass answer.id to handleEdited
+                    >
+                      Засах
+                    </Mybutton>
+                  </div>
+                </div>
+              )}
               <div className="flex justify-between items-center">
                 <p className="min-w-[75%] max-w-[75%] ml-9 rounded-sm">
                   {answer.desc}
