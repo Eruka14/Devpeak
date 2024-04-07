@@ -3,14 +3,26 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import defaultProfileImage from "../assets/defaultUser.png";
+import { useQuery } from "@tanstack/react-query";
 
 const CreateQuestion = () => {
   const { currentUser } = useContext(AuthContext);
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      makeRequest.get(`/users/find/${currentUser.id}`).then((res) => {
+        return res.data;
+      }),
+  });
+
+  // Авсан хэрэглэгчийн өгөгдлийг задлаж байна.
+  const userData = { ...data };
+
   return (
     <div className="flex items-center max-w-[50%] min-w-[50%] mt-2">
       <div className="flex border pl-2 pr-1 py-1 rounded-md justify-between gap-6 shadow bg-white">
         <img
-          src={"/upload/" + (currentUser.image || defaultProfileImage)}
+          src={"/upload/" + (userData.image || defaultProfileImage)}
           alt="myProfile"
           className="rounded-full h-9 w-9"
         />

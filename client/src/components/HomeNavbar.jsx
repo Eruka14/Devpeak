@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { MdLogout } from "react-icons/md";
-import Search from "./Search";
 import DevpeakLogo from "../assets/Logo.png";
 import { useNavigate } from "react-router-dom";
 import { FaBell } from "react-icons/fa";
@@ -13,10 +12,22 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const HomeNavbar = ({ userData }) => {
+const HomeNavbar = () => {
   // const [search, setSearch] = useState("");
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // Шинэ нэмсэн react query
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      makeRequest.get(`/users/find/${currentUser.id}`).then((res) => {
+        return res.data;
+      }),
+  });
+
+  // Авсан хэрэглэгчийн өгөгдлийг задлаж байна.
+  const userData = { ...data };
 
   const toastSuccessHandler = () => {
     toast.success("Амжилттай гарлаа", {
@@ -79,11 +90,11 @@ const HomeNavbar = ({ userData }) => {
             <Link to={`/profile/${currentUser.id}`}>
               <div className="flex border px-3 py-1 rounded-md cursor-pointer hover:bg-slate-300">
                 <img
-                  src={"/upload/" + (currentUser.image || defaultProfileImage)}
+                  src={"/upload/" + (userData.image || defaultProfileImage)}
                   alt="User"
                   className="rounded-full h-7 w-7"
                 />
-                <p className="ml-2 font-semibold">{currentUser.username}</p>
+                <p className="ml-2 font-semibold">{userData.username}</p>
               </div>
             </Link>
             <div

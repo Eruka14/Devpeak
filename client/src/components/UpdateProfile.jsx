@@ -18,8 +18,6 @@ const UpdateProfile = ({ setOpenUpdateUser, user }) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  console.log(inputs);
-
   const mutation = useMutation({
     mutationFn: async (user) => {
       return makeRequest.put("/users", user);
