@@ -85,7 +85,7 @@ const HomeNavbar = () => {
           {/* <Search setSearch={setSearch} search={search} /> */}
           <div className="flex items-center">
             <div className="mr-10 cursor-pointer hover:bg-slate-200 rounded-md p-2">
-              <FaBell />
+              {/* <FaBell /> */}
             </div>
             <Link to={`/profile/${currentUser.id}`}>
               <div className="flex border px-3 py-1 rounded-md cursor-pointer hover:bg-slate-300">

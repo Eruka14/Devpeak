@@ -83,3 +83,18 @@ export const editQuestion = (req, res) => {
     );
   });
 };
+
+// Ажиллаж байгаа.
+export const getOnlyUserQuestions = (req, res) => {
+  const q = `
+    SELECT q.*, u.id AS user_id, username, image 
+    FROM questions AS q 
+    JOIN users AS u ON (u.id = q.user_id) 
+    WHERE q.user_id = ? 
+    ORDER BY q.created_date DESC`;
+
+  db.query(q, [req.params.id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  });
+};

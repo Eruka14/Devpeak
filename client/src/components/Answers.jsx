@@ -107,11 +107,23 @@ const Answers = ({ question_id, question }) => {
     setOpenEditAnswer(false);
   };
 
+  const {
+    isLoading: Loading,
+    error: err,
+    data: DataUser,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      makeRequest.get(`/users/find/${currentUser.id}`).then((res) => {
+        return res.data;
+      }),
+  });
+
   return (
     <div className="flex-col">
       <div className="flex items-center mt-5">
         <img
-          src={"/upload/" + currentUser.image}
+          src={"/upload/" + DataUser.image}
           alt="Profile picture"
           className="w-8 h-8 rounded-full"
         />

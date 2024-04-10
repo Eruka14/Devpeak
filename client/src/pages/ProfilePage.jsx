@@ -12,6 +12,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { makeRequest } from "../axios";
 import UpdateProfile from "../components/UpdateProfile";
+import Question from "../components/Question";
 
 const ProfilePage = () => {
   const user_id = useLocation().pathname.split("/")[2];
@@ -28,10 +29,21 @@ const ProfilePage = () => {
 
   const userData = { ...data };
 
+  const {
+    isLoading: Loading,
+    error: err,
+    data: userQuestions,
+  } = useQuery({
+    queryKey: ["questions"],
+    queryFn: () =>
+      makeRequest.get(`/questions/userQuestions/${user_id}`).then((res) => {
+        return res.data;
+      }),
+  });
   return (
     <div className="min-h-screen bg-slate-50">
       <HomeNavbar />
-      <div className="flex-col w-[35%] justify-center mx-auto mt-10 bg-white py-4 px-3 shadow-md rounded-md">
+      <div className="flex-col w-[35%] justify-center mx-auto mt-10 bg-white py-4 px-3 shadow-md rounded-md mb-6">
         <div className="relative">
           <div className="flex justify-center">
             <img
@@ -64,6 +76,21 @@ const ProfilePage = () => {
       {openUpdateUser && (
         <UpdateProfile setOpenUpdateUser={setOpenUpdateUser} user={userData} />
       )}
+      <div className="grid max-w-2xl gap-5 mx-auto">
+        {err ? (
+          "Алдаа гарлаа."
+        ) : Loading ? (
+          "Уншиж байна."
+        ) : userQuestions.length > 0 ? (
+          userQuestions.map((questions) => (
+            <Question key={questions.id} question={questions} />
+          ))
+        ) : (
+          <div className="text-center text-gray-700 bg-white rounded-md py-2">
+            {"Хэрэглэгч асуулт асуугаагүй байна."}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
