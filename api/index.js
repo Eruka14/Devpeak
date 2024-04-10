@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import likesRouter from "./routes/likes.js";
 import answersRouter from "./routes/answers.js";
 import questionsRouter from "./routes/questions.js";
+import adminRouter from "./routes/admin.js";
 import multer from "multer";
 // express ашиглана.
 const app = express();
@@ -15,6 +16,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", true);
   next();
 });
+
 //амжигдаж буй өгөгдөл json оор дамжина.
 app.use(express.json());
 // Cors ашиглана
@@ -49,6 +51,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/likes", likesRouter);
 app.use("/api/answers", answersRouter);
 app.use("/api/questions", questionsRouter);
+app.use("/api/admin", adminRouter);
 
 // backend 8000 port дээр ажиллана
 app.listen(8000, () => {

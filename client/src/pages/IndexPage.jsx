@@ -7,6 +7,10 @@ import { FcFaq } from "react-icons/fc";
 import { ReactTyped } from "react-typed";
 import { FaArrowRight } from "react-icons/fa6";
 import { FcAnswers } from "react-icons/fc";
+import AdminGetAnswers from "../components/admin/AdminGetAnswers";
+import AdminGetUsers from "../components/admin/AdminGetUsers";
+import AdminGetQuestions from "../components/admin/AdminGetQuestions";
+import { FcBarChart } from "react-icons/fc";
 
 const indexPage = () => {
   return (
@@ -27,7 +31,7 @@ const indexPage = () => {
             />
           </h1>
           <h2 className="text-3xl text-center pt-7 text-slate-700 font-medium">
-            Программчлалын асуулт, хариултын веб платформ
+            Программчлалын асуулт, хариултын веб программ
           </h2>
           <div className="flex justify-center mt-10">
             <Link to="/login">
@@ -49,7 +53,7 @@ const indexPage = () => {
             </h2>
             <p className="text-justify text-slate-400 text-lg">
               &nbsp; Программчлах явцад гарах алдаагаа Devpeak сайтаар бусадтай
-              хуувалцаж хариултаа олоорой.
+              хуваалцаж хариултаа олоорой.
             </p>
           </div>
           <div className="  w-[40%] grid gap-10">
@@ -58,9 +62,20 @@ const indexPage = () => {
               Анхаарах
             </h2>
             <p className="text-justify text-slate-400 text-lg">
-              &nbsp; Эрүүл, зөв коммьюнити үүсгэхийн тулд таны туслалцаа бидэнд
+              &nbsp; Эрүүл, зөв харилцаа үүсгэхийн тулд таны туслалцаа бидэнд
               хэрэгтэй.
             </p>
+          </div>
+        </div>
+        <div className="w-[80%] mx-auto text-black">
+          <h1 className="flex justify-center items-center text-4xl font-bold mt-7 text-center bg-gradient-to-r from-purple-700 via-40% via-blue-700 to-70% to-pink-500 text-transparent bg-clip-text font-sans">
+            <FcBarChart className="mt-1" />{" "}
+            <span className="ml-2">Манай веб сайт</span>
+          </h1>
+          <div className="flex justify-between mt-12 ">
+            <AdminGetUsers />
+            <AdminGetAnswers />
+            <AdminGetQuestions />
           </div>
         </div>
       </div>
